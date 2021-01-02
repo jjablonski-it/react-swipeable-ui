@@ -16,7 +16,7 @@ function Scroll({ children, page = 0 }: Props) {
   console.log("direction", direction);
   console.log("currentPage", currentPage);
   console.log("pagesCount", pagesCount);
-  console.log("trigger", trigger);
+  console.log("pagesCount", pagesCount);
 
   const handlePageChange = (direction) => {
     let newCurrentPage: number;

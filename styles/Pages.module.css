@@ -1,0 +1,27 @@
+.page {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  color: white;
+}
+
+.one {
+  background-color: aqua;
+}
+
+.two {
+  background-color: rgb(219, 216, 0);
+}
+
+.three {
+  background-color: rgb(183, 0, 255);
+}
+
+.four {
+  background-color: rgb(72, 255, 0);
+}
+
+.page h1 {
+  text-align: center;
+  color: white;
+}
