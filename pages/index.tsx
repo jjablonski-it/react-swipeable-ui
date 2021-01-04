@@ -1,20 +1,15 @@
-import Next from "../components/Next";
 import Scroll from "../utils/hoc/Scroll";
-import styles from "../styles/Wrapper.module.css";
-import One from "../components/One";
-import Two from "../components/Two";
-import Four from "../components/Four";
-import Three from "../components/Three";
 import Page from "../components/Page";
+
+import styles from "../styles/Pages.module.css";
 
 function Home() {
   return (
     <Scroll>
-      <One />
-      <Two />
-      <Three />
-      <Four />
-      <Page color="red" text="test text" />
+      <Page text="One" className={styles.one} />
+      <Page text="Two" className={styles.two} />
+      <Page text="Three" className={styles.three} />
+      <Page text="Four" className={styles.four} />
     </Scroll>
   );
 }

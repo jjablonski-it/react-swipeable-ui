@@ -1,8 +1,9 @@
 .page {
   margin: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   color: white;
+  text-align: center;
 }
 
 .one {
@@ -19,9 +20,4 @@
 
 .four {
   background-color: rgb(72, 255, 0);
-}
-
-.page h1 {
-  text-align: center;
-  color: white;
 }

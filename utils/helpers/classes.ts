@@ -1,5 +1,5 @@
 const classes = (...args) => {
-  return args.join(" ");
+  return args.filter((arg) => arg).join(" ");
 };
 
 export default classes;

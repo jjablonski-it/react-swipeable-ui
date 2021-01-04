@@ -1,5 +1,7 @@
-import { cloneElement, ReactElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useWindowsScroll from "../hooks/useWindowsScroll";
+import styles from "../../styles/Pages.module.css";
+import classes from "../helpers/classes";
 
 interface Props {
   children: JSX.Element[];
@@ -10,22 +12,31 @@ function Scroll({ children, page = 0 }: Props) {
   const [currentPage, setCurrentPage] = useState(page);
   const { direction, trigger } = useWindowsScroll();
 
-  const CurrentPage = children[currentPage];
+  const pageStyle = styles.page;
+
+  const childrenWithProps = React.Children.map(children, (child, i) => {
+    console.log(child);
+
+    if (React.isValidElement(child)) {
+      const childClasses = (child.props as any).className;
+      return React.cloneElement(child, {
+        key: i,
+        //@ts-ignore
+        className: classes(childClasses, pageStyle),
+      });
+    }
+    return child;
+  });
+
+  console.log(childrenWithProps);
+
+  const CurrentPage = childrenWithProps[currentPage];
   const pagesCount = children.length;
 
-  console.log("direction", direction);
-  console.log("currentPage", currentPage);
-  console.log("pagesCount", pagesCount);
-  console.log("pagesCount", pagesCount);
-
-  const getFinalPage = (Component: JSX.Element, key: number) => {
-    const clone = cloneElement(Component, {
-      key,
-    });
-    console.log(clone);
-
-    return clone;
-  };
+  // console.log("direction", direction);
+  // console.log("currentPage", currentPage);
+  // console.log("pagesCount", pagesCount);
+  // console.log("pagesCount", pagesCount);
 
   const handlePageChange = (direction) => {
     let newCurrentPage: number;
@@ -43,7 +54,7 @@ function Scroll({ children, page = 0 }: Props) {
     handlePageChange(direction);
   }, [trigger]);
 
-  return getFinalPage(CurrentPage, currentPage);
+  return CurrentPage;
 }
 
 export default Scroll;
