@@ -5,12 +5,17 @@ import One from "../components/One";
 import Two from "../components/Two";
 import Four from "../components/Four";
 import Three from "../components/Three";
+import Page from "../components/Page";
 
 function Home() {
   return (
-    <div>
-      <Scroll page={0}>{[One, Two, Three, Four]}</Scroll>
-    </div>
+    <Scroll>
+      <One />
+      <Two />
+      <Three />
+      <Four />
+      <Page color="red" text="test text" />
+    </Scroll>
   );
 }
 
