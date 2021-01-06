@@ -1,11 +1,16 @@
 import { useLayoutEffect, useState } from "react";
-import { pageYfromTouch, deltaFormTouch } from "../../helpers/windowEvents";
+import {
+  pageYfromTouch,
+  deltaDiff,
+  pageYfromClick,
+} from "../../helpers/windowEvents";
 
 export type Direction = "up" | "down" | null;
 
 function useWindowsScroll() {
   const [direction, setDirection] = useState<Direction>(null);
-  const [touchStartPos, setTouchStartPos] = useState<number | null>(null);
+  const [startPos, setStartPos] = useState<number | null>(null);
+  const [mouseDown, setMouseDown] = useState<boolean>(false);
   const [offset, setOffset] = useState<number>(0);
   const [trigger, setTrigger] = useState<boolean>(false);
 
@@ -29,32 +34,68 @@ function useWindowsScroll() {
   };
 
   const handleTouchStart = (e) => {
-    setTouchStartPos(pageYfromTouch(e));
+    setStartPos(pageYfromTouch(e));
   };
 
   const handleTouchEnd = (e) => {
     const endPos = pageYfromTouch(e);
-    const delta = deltaFormTouch(touchStartPos, endPos);
+    const delta = deltaDiff(startPos, endPos);
     updateDirection(delta);
-    setTouchStartPos(null);
+    setStartPos(null);
     setOffset(0);
   };
 
   const handleTouchMove = (e) => {
-    const endPos = pageYfromTouch(e);
-    setOffset(deltaFormTouch(touchStartPos, endPos));
+    const currentPos = pageYfromTouch(e);
+    console.log("start", startPos);
+    console.log("current", currentPos);
+    setOffset(deltaDiff(startPos, currentPos));
+  };
+
+  const handleMouseDown = (e) => {
+    setStartPos(pageYfromClick(e));
+    setMouseDown(true);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!mouseDown) return;
+    const currentPos = pageYfromClick(e);
+    setOffset(deltaDiff(startPos, currentPos));
+  };
+
+  const handleMouseUp = (e) => {
+    if (!mouseDown) return;
+    const endPos = pageYfromClick(e);
+    const delta = deltaDiff(startPos, endPos);
+    updateDirection(delta);
+    setMouseDown(false);
+    setStartPos(null);
+    setOffset(0);
   };
 
   useLayoutEffect(() => {
-    window.addEventListener("mousewheel", handleScroll);
+    window.removeEventListener("mousewheel", handleScroll);
+
     window.addEventListener("touchstart", handleTouchStart);
     window.addEventListener("touchend", handleTouchEnd);
     window.addEventListener("touchmove", handleTouchMove);
+
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mouseout", handleMouseUp);
+    window.addEventListener("mousemove", handleMouseMove);
+
     return () => {
       window.removeEventListener("mousewheel", handleScroll);
+
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
       window.removeEventListener("touchmove", handleTouchMove);
+
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mouseout", handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   });
 
