@@ -61,7 +61,7 @@ function Scroll({ children, page = 0 }: Props) {
   }, [trigger]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       <motion.div
         initial={{
           y: `${direction === "up" ? "-" : "+"}100%`,
