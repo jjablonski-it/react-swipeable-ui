@@ -15,8 +15,6 @@ function Scroll({ children, page = 0 }: Props) {
   const pageStyle = styles.page;
 
   const childrenWithProps = React.Children.map(children, (child, i) => {
-    console.log(child);
-
     if (React.isValidElement(child)) {
       const childClasses = (child.props as any).className;
       return React.cloneElement(child, {
@@ -27,8 +25,6 @@ function Scroll({ children, page = 0 }: Props) {
     }
     return child;
   });
-
-  console.log(childrenWithProps);
 
   const CurrentPage = childrenWithProps[currentPage];
   const pagesCount = children.length;
