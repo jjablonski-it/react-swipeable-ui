@@ -11,6 +11,7 @@ interface Props {
 
 function Scroll({ children, page = 0 }: Props) {
   const [currentPage, setCurrentPage] = useState(page);
+  const [animating, setAnimating] = useState(true);
   const { direction, trigger } = useWindowsScroll();
 
   const pageStyle = styles.page;
@@ -44,11 +45,18 @@ function Scroll({ children, page = 0 }: Props) {
     }
     if (newCurrentPage >= 0 && newCurrentPage < pagesCount) {
       setCurrentPage(newCurrentPage);
+      setAnimating(true);
     }
   };
 
   useEffect(() => {
-    handlePageChange(direction);
+    setAnimating(false);
+  }, []);
+
+  useEffect(() => {
+    if (!animating) {
+      handlePageChange(direction);
+    }
   }, [trigger]);
 
   return (
@@ -57,6 +65,9 @@ function Scroll({ children, page = 0 }: Props) {
         initial={{ y: `${direction === "up" ? "-" : "+"}100%` }}
         animate={{ y: 0 }}
         exit={{ y: `${direction === "up" ? "+" : "-"}100%` }}
+        onAnimationComplete={() => {
+          setAnimating(false);
+        }}
         transition={{ duration: 0.5 }}
         key={currentPage}
         className={styles.wrapper}
