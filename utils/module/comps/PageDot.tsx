@@ -14,19 +14,20 @@ function PageDot({
   index,
   setCurrentPage,
 }: Props): ReactElement {
-  const size = current ? 15 : 10;
+  const size = 10;
 
   return (
     <motion.div
       style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        opacity: 0.3,
+        opacity: 0.4,
         backgroundColor: "gray",
         borderRadius: "50%",
         margin: "5px 0",
         cursor: "pointer",
+        width: `${size}px`,
+        height: `${size}px`,
       }}
+      animate={{ scale: current ? 1.3 : 1 }}
       whileHover={{ scale: 1.2 }}
       onClick={() => {
         setCurrentPage(index);
