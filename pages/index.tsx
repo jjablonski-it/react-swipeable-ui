@@ -1,4 +1,4 @@
-import Scroll from "../utils/hoc/Scroll";
+import Scroll from "../utils/module/Scroll";
 import Page from "../components/Page";
 
 import styles from "../styles/Pages.module.css";

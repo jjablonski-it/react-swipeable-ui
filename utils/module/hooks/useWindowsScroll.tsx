@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from "react";
-import { pageYfromTouch, deltaFormTouch } from "../helpers/windowEvents";
+import { pageYfromTouch, deltaFormTouch } from "../../helpers/windowEvents";
 
 export type Direction = "up" | "down" | null;
 
