@@ -5,7 +5,7 @@ import styles from "../styles/Pages.module.css";
 
 function Home() {
   return (
-    <Scroll>
+    <Scroll page={3}>
       <Page text="One" className={styles.one} />
       <Page text="Two" className={styles.two} />
       <Page text="Three" className={styles.three} />

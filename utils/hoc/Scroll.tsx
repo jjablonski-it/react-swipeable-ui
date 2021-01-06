@@ -52,15 +52,18 @@ function Scroll({ children, page = 0 }: Props) {
   }, [trigger]);
 
   return (
-    <motion.div
-      initial={{ y: "100%" }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      key={currentPage}
-      className={styles.wrapper}
-    >
-      {CurrentPage}
-    </motion.div>
+    <AnimatePresence>
+      <motion.div
+        initial={{ y: `${direction === "up" ? "-" : "+"}100%` }}
+        animate={{ y: 0 }}
+        exit={{ y: `${direction === "up" ? "+" : "-"}100%` }}
+        transition={{ duration: 0.5 }}
+        key={currentPage}
+        className={styles.wrapper}
+      >
+        {CurrentPage}
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
