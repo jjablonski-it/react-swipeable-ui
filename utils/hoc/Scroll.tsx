@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useWindowsScroll from "../hooks/useWindowsScroll";
 import styles from "../../styles/Pages.module.css";
 import classes from "../helpers/classes";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
   children: JSX.Element[];
@@ -50,7 +51,17 @@ function Scroll({ children, page = 0 }: Props) {
     handlePageChange(direction);
   }, [trigger]);
 
-  return CurrentPage;
+  return (
+    <motion.div
+      initial={{ y: "100%" }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      key={currentPage}
+      className={styles.wrapper}
+    >
+      {CurrentPage}
+    </motion.div>
+  );
 }
 
 export default Scroll;
