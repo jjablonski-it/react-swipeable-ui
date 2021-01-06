@@ -12,7 +12,7 @@ interface Props {
 function Scroll({ children, page = 0 }: Props) {
   const [currentPage, setCurrentPage] = useState(page);
   const [animating, setAnimating] = useState(true);
-  const { direction, trigger } = useWindowsScroll();
+  const { direction, trigger, offset } = useWindowsScroll();
 
   const pageStyle = styles.page;
 
@@ -35,6 +35,7 @@ function Scroll({ children, page = 0 }: Props) {
   // console.log("currentPage", currentPage);
   // console.log("pagesCount", pagesCount);
   // console.log("pagesCount", pagesCount);
+  // console.log("offset", offset);
 
   const handlePageChange = (direction) => {
     let newCurrentPage: number;
@@ -62,13 +63,17 @@ function Scroll({ children, page = 0 }: Props) {
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ y: `${direction === "up" ? "-" : "+"}100%` }}
-        animate={{ y: 0 }}
-        exit={{ y: `${direction === "up" ? "+" : "-"}100%` }}
+        initial={{
+          y: `${direction === "up" ? "-" : "+"}100%`,
+        }}
+        animate={{ y: -offset / 5 }}
+        exit={{
+          y: `${direction === "up" ? "+" : "-"}100%`,
+        }}
         onAnimationComplete={() => {
           setAnimating(false);
         }}
-        transition={{ duration: 0.5 }}
+        transition={{ type: "spring", damping: 100, stiffness: 1200 }}
         key={currentPage}
         className={styles.wrapper}
       >
