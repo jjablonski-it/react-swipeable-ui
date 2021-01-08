@@ -100,7 +100,7 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
           initial={{
             y: `${realDirection === "up" ? "-" : "+"}100%`,
           }}
-          animate={{ y: -offset / 5 }}
+          animate={{ y: -offset / 3 }}
           exit={{
             y: `${realDirection === "up" ? "+" : "-"}100%`,
           }}

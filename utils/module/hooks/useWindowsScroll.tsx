@@ -6,6 +6,7 @@ import {
 } from "../../helpers/windowEvents";
 
 export type Direction = "up" | "down" | null;
+const threshold = 125;
 
 function useWindowsScroll() {
   const [direction, setDirection] = useState<Direction>(null);
@@ -15,6 +16,7 @@ function useWindowsScroll() {
   const [trigger, setTrigger] = useState<boolean>(false);
 
   const updateDirection = (delta: number) => {
+    if (Math.abs(delta) < threshold) return;
     let dir: Direction;
 
     if (delta < 0) {
