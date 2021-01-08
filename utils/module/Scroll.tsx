@@ -79,6 +79,7 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   }, [direction]);
 
   useEffect(() => {
+    setRealDirection(direction);
     if (!animating) handlePageChange(direction);
   }, [trigger]);
 
