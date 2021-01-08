@@ -74,7 +74,7 @@ function useWindowsScroll() {
   };
 
   useLayoutEffect(() => {
-    window.removeEventListener("mousewheel", handleScroll);
+    window.addEventListener("mousewheel", handleScroll);
 
     window.addEventListener("touchstart", handleTouchStart);
     window.addEventListener("touchend", handleTouchEnd);
