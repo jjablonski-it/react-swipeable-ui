@@ -19,20 +19,25 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const { direction, trigger, offset } = useWindowsScroll();
 
   const pageStyle = styles.page;
+  const allPages = [<div />, ...children, <div />];
 
-  const childrenWithProps = React.Children.map(children, (child, i) => {
+  const mapChild = (child: JSX.Element, key: number): JSX.Element => {
     if (React.isValidElement(child)) {
       const childClasses = (child.props as any).className;
       return React.cloneElement(child, {
-        key: i,
+        key,
         //@ts-ignore
         className: classes(childClasses, pageStyle),
       });
     }
     return child;
-  });
+  };
 
+  const childrenWithProps = React.Children.map(children, mapChild);
+
+  const PreviousPage = childrenWithProps[currentPage - 1];
   const CurrentPage = childrenWithProps[currentPage];
+  const NextPage = childrenWithProps[currentPage + 1];
   const pagesCount = children.length;
 
   const updatePage = (page: number) => {
@@ -86,29 +91,37 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
       {pageIndicator && (
         <PageIndicator
           pages={children}
-          currentPage={currentPage}
+          currentPage={currentPage - 1}
           setCurrentPage={forcePageChange}
         />
       )}
-      <AnimatePresence initial={false}>
-        <motion.div
-          initial={{
-            y: `${realDirection === "up" ? "-" : "+"}100%`,
-          }}
-          animate={{ y: -offset / 5 }}
-          exit={{
-            y: `${realDirection === "up" ? "+" : "-"}100%`,
-          }}
-          onAnimationComplete={() => {
-            setAnimating(false);
-          }}
-          transition={{ type: "spring", damping: 100, stiffness: 1500 }}
-          key={currentPage}
-          className={styles.wrapper}
-        >
-          {CurrentPage}
-        </motion.div>
-      </AnimatePresence>
+      {/* <AnimatePresence initial={false}> */}
+      <motion.div
+        initial={{
+          y: `${realDirection === "up" ? "-" : "+"}100%`,
+        }}
+        animate={{ y: -offset / 5 }}
+        exit={{
+          y: `${realDirection === "up" ? "+" : "-"}100%`,
+        }}
+        onAnimationComplete={() => {
+          setAnimating(false);
+        }}
+        transition={{
+          type: "spring",
+          damping: 100,
+          stiffness: 1800,
+        }}
+        key={currentPage}
+        className={styles.wrapper}
+      >
+        <div style={{ height: "100%", marginTop: "-100vh" }}>
+          {PreviousPage}
+        </div>
+        {CurrentPage}
+        {NextPage}
+      </motion.div>
+      {/* </AnimatePresence> */}
     </>
   );
 }
