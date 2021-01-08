@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useWindowsScroll from "./hooks/useWindowsScroll";
+import useWindowsScroll, { Direction } from "./hooks/useWindowsScroll";
 import styles from "../../styles/Pages.module.css";
 import classes from "../helpers/classes";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,6 +14,7 @@ interface Props {
 function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const [currentPage, setCurrentPage] = useState(page);
   const [animating, setAnimating] = useState(true);
+  const [realDirection, setRealDirection] = useState<Direction>(null);
   const { direction, trigger, offset } = useWindowsScroll();
 
   const pageStyle = styles.page;
@@ -63,7 +64,11 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   }, []);
 
   useEffect(() => {
-    handlePageChange(direction);
+    setRealDirection(direction);
+  }, [direction]);
+
+  useEffect(() => {
+    if (!animating) handlePageChange(direction);
   }, [trigger]);
 
   return (
@@ -78,16 +83,16 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
       <AnimatePresence initial={false}>
         <motion.div
           initial={{
-            y: `${direction === "up" ? "-" : "+"}100%`,
+            y: `${realDirection === "up" ? "-" : "+"}100%`,
           }}
           animate={{ y: -offset / 5 }}
           exit={{
-            y: `${direction === "up" ? "+" : "-"}100%`,
+            y: `${realDirection === "up" ? "+" : "-"}100%`,
           }}
           onAnimationComplete={() => {
             setAnimating(false);
           }}
-          transition={{ type: "spring", damping: 100, stiffness: 1200 }}
+          transition={{ type: "spring", damping: 100, stiffness: 1500 }}
           key={currentPage}
           className={styles.wrapper}
         >
