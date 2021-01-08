@@ -109,8 +109,8 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
           }}
           transition={{
             type: "spring",
-            damping: 100,
-            stiffness: 1800,
+            damping: 90,
+            stiffness: 1250,
           }}
           key={currentPage}
           className={styles.wrapper}
