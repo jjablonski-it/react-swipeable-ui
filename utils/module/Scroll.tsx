@@ -91,7 +91,7 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
       {pageIndicator && (
         <PageIndicator
           pages={children}
-          currentPage={currentPage - 1}
+          currentPage={currentPage}
           setCurrentPage={forcePageChange}
         />
       )}
