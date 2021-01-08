@@ -102,7 +102,7 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
           onAnimationComplete={() => {
             setAnimating(false);
           }}
-          transition={{ type: "spring", damping: 100, stiffness: 1200 }}
+          transition={{ type: "spring", damping: 100, stiffness: 1500 }}
           key={currentPage}
           className={styles.wrapper}
         >
