@@ -95,33 +95,33 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
           setCurrentPage={forcePageChange}
         />
       )}
-      {/* <AnimatePresence initial={false}> */}
-      <motion.div
-        initial={{
-          y: `${realDirection === "up" ? "-" : "+"}100%`,
-        }}
-        animate={{ y: -offset / 5 }}
-        exit={{
-          y: `${realDirection === "up" ? "+" : "-"}100%`,
-        }}
-        onAnimationComplete={() => {
-          setAnimating(false);
-        }}
-        transition={{
-          type: "spring",
-          damping: 100,
-          stiffness: 1800,
-        }}
-        key={currentPage}
-        className={styles.wrapper}
-      >
-        <div style={{ height: "100%", marginTop: "-100vh" }}>
-          {PreviousPage}
-        </div>
-        {CurrentPage}
-        {NextPage}
-      </motion.div>
-      {/* </AnimatePresence> */}
+      <AnimatePresence initial={false}>
+        <motion.div
+          initial={{
+            y: `${realDirection === "up" ? "-" : "+"}100%`,
+          }}
+          animate={{ y: -offset / 5 }}
+          exit={{
+            y: `${realDirection === "up" ? "+" : "-"}100%`,
+          }}
+          onAnimationComplete={() => {
+            setAnimating(false);
+          }}
+          transition={{
+            type: "spring",
+            damping: 100,
+            stiffness: 1800,
+          }}
+          key={currentPage}
+          className={styles.wrapper}
+        >
+          <div style={{ height: "100%", marginTop: "-100vh" }}>
+            {PreviousPage}
+          </div>
+          {CurrentPage}
+          {NextPage}
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 }
