@@ -47,8 +47,6 @@ function useWindowsScroll() {
 
   const handleTouchMove = (e) => {
     const currentPos = pageYfromTouch(e);
-    console.log("start", startPos);
-    console.log("current", currentPos);
     setOffset(deltaDiff(startPos, currentPos));
   };
 

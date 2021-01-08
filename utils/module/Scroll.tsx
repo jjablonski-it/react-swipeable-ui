@@ -15,6 +15,7 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const [currentPage, setCurrentPage] = useState(page);
   const [animating, setAnimating] = useState(true);
   const [realDirection, setRealDirection] = useState<Direction>(null);
+  const [destPage, setDestPage] = useState<number>(null);
   const { direction, trigger, offset } = useWindowsScroll();
 
   const pageStyle = styles.page;
@@ -34,14 +35,8 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const CurrentPage = childrenWithProps[currentPage];
   const pagesCount = children.length;
 
-  // console.log("direction", direction);
-  // console.log("currentPage", currentPage);
-  // console.log("pagesCount", pagesCount);
-  // console.log("pagesCount", pagesCount);
-  // console.log("offset", offset);
-
-  const safePageChange = (page: number) => {
-    if (!animating) {
+  const updatePage = (page: number) => {
+    if (!animating && page >= 0 && page < pagesCount) {
       setCurrentPage(page);
       setAnimating(true);
     }
@@ -54,9 +49,20 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
     } else if (direction === "down") {
       newCurrentPage = currentPage + 1;
     }
-    if (newCurrentPage >= 0 && newCurrentPage < pagesCount) {
-      safePageChange(newCurrentPage);
-    }
+    updatePage(newCurrentPage);
+  };
+
+  const forcePageChange = (page) => {
+    if (animating || page === currentPage) return;
+    if (page < currentPage) setRealDirection("up");
+    else if (page > currentPage) setRealDirection("down");
+    else setRealDirection(null);
+    setDestPage(page);
+  };
+
+  const handleForcePageChange = () => {
+    updatePage(destPage);
+    setDestPage(null);
   };
 
   useEffect(() => {
@@ -71,13 +77,17 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
     if (!animating) handlePageChange(direction);
   }, [trigger]);
 
+  useEffect(() => {
+    if (destPage !== null) handleForcePageChange();
+  }, [destPage]);
+
   return (
     <>
       {pageIndicator && (
         <PageIndicator
           pages={children}
           currentPage={currentPage}
-          setCurrentPage={safePageChange}
+          setCurrentPage={forcePageChange}
         />
       )}
       <AnimatePresence initial={false}>
@@ -92,7 +102,7 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
           onAnimationComplete={() => {
             setAnimating(false);
           }}
-          transition={{ type: "spring", damping: 100, stiffness: 1500 }}
+          transition={{ type: "spring", damping: 100, stiffness: 1200 }}
           key={currentPage}
           className={styles.wrapper}
         >
