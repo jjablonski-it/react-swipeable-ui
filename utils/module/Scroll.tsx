@@ -19,7 +19,7 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const { direction, trigger, offset } = useWindowsScroll();
 
   const router = useRouter();
-  const { id: currentPageId } = router.query;
+  const currentPageId = +router.query.id;
 
   // Load page from url
 
@@ -75,11 +75,26 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   };
 
   useEffect(() => {
-    if (currentPage !== null) router.push(`${currentPage}`);
+    console.log("currentPageId", currentPageId);
+    console.log("currentPage", currentPage);
+
+    if (
+      (currentPageId || currentPageId === 0) &&
+      currentPageId !== currentPage
+    ) {
+      console.log("UPDATE");
+      setCurrentPage(currentPageId);
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (currentPage !== null && currentPageId !== currentPage)
+      router.push(`/${currentPage}`);
   }, [currentPage]);
 
   useEffect(() => {
     setAnimating(false);
+    return () => {};
   }, []);
 
   useEffect(() => {
