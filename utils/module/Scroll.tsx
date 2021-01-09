@@ -19,7 +19,9 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const { direction, trigger, offset } = useWindowsScroll();
 
   const router = useRouter();
-  console.log(router);
+  const { id: currentPageId } = router.query;
+
+  // Load page from url
 
   const pageStyle = styles.page;
 
@@ -73,8 +75,11 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   };
 
   useEffect(() => {
+    if (currentPage !== null) router.push(`${currentPage}`);
+  }, [currentPage]);
+
+  useEffect(() => {
     setAnimating(false);
-    router.replace(`${currentPage}`);
   }, []);
 
   useEffect(() => {
