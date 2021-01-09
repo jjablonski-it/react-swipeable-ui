@@ -4,7 +4,6 @@ import styles from "../../styles/Pages.module.css";
 import classes from "../helpers/classes";
 import { motion, AnimatePresence } from "framer-motion";
 import PageIndicator from "./comps/PageIndicator";
-
 interface Props {
   children: JSX.Element[];
   page?: number;
@@ -19,7 +18,6 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const { direction, trigger, offset } = useWindowsScroll();
 
   const pageStyle = styles.page;
-  const allPages = [<div />, ...children, <div />];
 
   const mapChild = (child: JSX.Element, key: number): JSX.Element => {
     if (React.isValidElement(child)) {
