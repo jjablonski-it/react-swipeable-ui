@@ -4,6 +4,7 @@ import styles from "../../styles/Pages.module.css";
 import classes from "../helpers/classes";
 import { motion, AnimatePresence } from "framer-motion";
 import PageIndicator from "./comps/PageIndicator";
+import { useRouter } from "next/dist/client/router";
 interface Props {
   children: JSX.Element[];
   page?: number;
@@ -16,6 +17,9 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const [realDirection, setRealDirection] = useState<Direction>(null);
   const [destPage, setDestPage] = useState<number>(null);
   const { direction, trigger, offset } = useWindowsScroll();
+
+  const router = useRouter();
+  console.log(router);
 
   const pageStyle = styles.page;
 
@@ -70,6 +74,7 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
 
   useEffect(() => {
     setAnimating(false);
+    router.replace(`${currentPage}`);
   }, []);
 
   useEffect(() => {
