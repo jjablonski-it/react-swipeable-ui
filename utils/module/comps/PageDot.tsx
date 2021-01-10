@@ -27,7 +27,7 @@ function PageDot({
         width: `${size}px`,
         height: `${size}px`,
       }}
-      animate={{ scale: current ? 1.3 : 1 }}
+      animate={{ scale: current ? 1.4 : 1 }}
       whileHover={{ scale: 1.2 }}
       onClick={() => {
         setCurrentPage(index);
