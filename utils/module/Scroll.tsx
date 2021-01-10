@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useWindowsScroll, { Direction } from "./hooks/useWindowsScroll";
 import styles from "../../styles/Pages.module.css";
 import classes from "../helpers/classes";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, MotionProps, Variants } from "framer-motion";
 import PageIndicator from "./comps/PageIndicator";
 import { useRouter } from "next/dist/client/router";
 interface Props {
@@ -11,15 +11,47 @@ interface Props {
   pageIndicator?: boolean;
 }
 
+const initialVariants: Variants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: { duration: 0.75 },
+  },
+  exit: { opacity: 1 },
+};
+
+const baseVariants = (direction, offset): Variants => ({
+  initial: {
+    y: `${direction === "up" ? "-" : "+"}100%`,
+  },
+  animate: {
+    y: -offset / 3,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      damping: 90,
+      stiffness: 1250,
+    },
+  },
+  exit: {
+    y: `${direction === "up" ? "+" : "-"}100%`,
+  },
+});
+
 function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const [currentPage, setCurrentPage] = useState(page);
   const [animating, setAnimating] = useState(true);
   const [realDirection, setRealDirection] = useState<Direction>(null);
   const [destPage, setDestPage] = useState<number>(null);
-  const { direction, trigger, offset } = useWindowsScroll();
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
   const router = useRouter();
   const currentPageId = +router.query.id;
+
+  // Custom use window hook
+  const { direction, trigger, offset } = useWindowsScroll();
 
   // Load page from url
 
@@ -75,8 +107,8 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   };
 
   useEffect(() => {
-    console.log("currentPageId", currentPageId);
-    console.log("currentPage", currentPage);
+    // console.log("currentPageId", currentPageId);
+    // console.log("currentPage", currentPage);
 
     if (
       (currentPageId || currentPageId === 0) &&
@@ -93,11 +125,6 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   }, [currentPage]);
 
   useEffect(() => {
-    setAnimating(false);
-    return () => {};
-  }, []);
-
-  useEffect(() => {
     setRealDirection(direction);
   }, [direction]);
 
@@ -110,6 +137,8 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
     if (destPage !== null) handleForcePageChange();
   }, [destPage]);
 
+  if (currentPageId !== currentPage && !animating) return <></>;
+
   return (
     <>
       {pageIndicator && (
@@ -119,33 +148,28 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
           setCurrentPage={forcePageChange}
         />
       )}
-      <AnimatePresence initial={false}>
-        <motion.div
-          initial={{
-            y: `${realDirection === "up" ? "-" : "+"}100%`,
-          }}
-          animate={{ y: -offset / 3 }}
-          exit={{
-            y: `${realDirection === "up" ? "+" : "-"}100%`,
-          }}
-          onAnimationComplete={() => {
-            setAnimating(false);
-          }}
-          transition={{
-            type: "spring",
-            damping: 90,
-            stiffness: 1250,
-          }}
-          key={currentPage}
-          className={styles.wrapper}
-        >
-          <div style={{ height: "100%", marginTop: "-100vh" }}>
-            {PreviousPage}
-          </div>
-          {CurrentPage}
-          {NextPage}
-        </motion.div>
-      </AnimatePresence>
+      <motion.div
+        variants={
+          isFirstRender
+            ? initialVariants
+            : baseVariants(realDirection, animating ? 0 : offset)
+        }
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        onAnimationComplete={() => {
+          if (isFirstRender) setIsFirstRender(false);
+          setAnimating(false);
+        }}
+        key={currentPage}
+        className={styles.wrapper}
+      >
+        <div style={{ height: "100%", marginTop: "-100vh" }}>
+          {PreviousPage}
+        </div>
+        {CurrentPage}
+        {NextPage}
+      </motion.div>
     </>
   );
 }

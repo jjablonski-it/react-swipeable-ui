@@ -6,7 +6,7 @@ import {
 } from "../../helpers/windowEvents";
 
 export type Direction = "up" | "down" | null;
-const threshold = 125;
+const threshold = 100;
 
 function useWindowsScroll() {
   const [direction, setDirection] = useState<Direction>(null);
