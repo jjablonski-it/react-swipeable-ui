@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useWindowsScroll, { Direction } from "./hooks/useWindowsScroll";
 import styles from "../../styles/Pages.module.css";
 import classes from "../helpers/classes";
-import { motion, AnimatePresence, MotionProps, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import PageIndicator from "./comps/PageIndicator";
 import { useRouter } from "next/dist/client/router";
 interface Props {
@@ -48,7 +48,9 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   const router = useRouter();
-  const currentPageId = +router.query.id;
+  console.log(router);
+
+  const currentPageId = +router.asPath.replace("/#", "");
 
   // Custom use window hook
   const { direction, trigger, offset } = useWindowsScroll();
@@ -111,7 +113,8 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
     // console.log("currentPage", currentPage);
 
     if (
-      (currentPageId || currentPageId === 0) &&
+      currentPageId &&
+      currentPageId !== NaN &&
       currentPageId !== currentPage
     ) {
       console.log("UPDATE");
@@ -120,8 +123,8 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   }, [router]);
 
   useEffect(() => {
-    if (currentPage !== null && currentPageId !== currentPage)
-      router.push(`/${currentPage}`);
+    if (currentPage !== NaN && currentPageId !== currentPage)
+      router.push(`/#${currentPage}`);
   }, [currentPage]);
 
   useEffect(() => {

@@ -1,16 +1,17 @@
 import { useRouter } from "next/dist/client/router";
-import React, { ReactElement, useEffect } from "react";
+import Page from "../components/Page";
+import Scroll from "../utils/module/Scroll";
+import styles from "../styles/Pages.module.css";
 
-interface Props {}
-
-function index({}: Props): ReactElement {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.replace("/0");
-  }, []);
-
-  return <></>;
+function Home() {
+  return (
+    <Scroll>
+      <Page text="One" className={styles.one} />
+      <Page text="Two" className={styles.two} />
+      <Page text="Three" className={styles.three} />
+      <Page text="Four" className={styles.four} />
+    </Scroll>
+  );
 }
 
-export default index;
+export default Home;
