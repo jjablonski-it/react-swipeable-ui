@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import useWindowsScroll, { Direction } from "./hooks/useWindowsScroll";
 import styles from "../../styles/Pages.module.css";
 import classes from "../helpers/classes";
 import { motion, Variants } from "framer-motion";
 import PageIndicator from "./comps/PageIndicator";
 import { useRouter } from "next/dist/client/router";
+
+export type Page = JSX.Element;
+export interface PageProps {
+  pageName?: string;
+}
+
 interface Props {
-  children: JSX.Element[];
+  children: Page[];
   page?: number;
   pageIndicator?: boolean;
 }
@@ -60,7 +66,7 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   // Custom use window hook
   const { direction, trigger, offset } = useWindowsScroll();
 
-  const mapChild = (child: JSX.Element, key: number): JSX.Element => {
+  const mapChild = (child: Page, key: number): Page => {
     if (React.isValidElement(child)) {
       const childClasses = (child.props as any).className;
       return React.cloneElement(child, {
