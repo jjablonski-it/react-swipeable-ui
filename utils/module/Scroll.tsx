@@ -22,23 +22,28 @@ const initialVariants: Variants = {
   exit: { opacity: 1 },
 };
 
-const baseVariants = (direction, offset): Variants => ({
-  initial: {
-    y: `${direction === "up" ? "-" : "+"}100%`,
-  },
-  animate: {
-    y: -offset / 3,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      damping: 90,
-      stiffness: 1250,
+const baseVariants = (direction, offset): Variants => {
+  const offsetPx = -offset / 3;
+  return {
+    initial: {
+      y: `${direction === "up" ? "-" : "+"}100%`,
+      marginTop: offsetPx,
     },
-  },
-  exit: {
-    y: `${direction === "up" ? "+" : "-"}100%`,
-  },
-});
+    animate: {
+      y: offsetPx,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 90,
+        stiffness: 1000,
+      },
+    },
+    exit: {
+      y: `${direction === "up" ? "+" : "-"}100%`,
+      marginTop: offsetPx,
+    },
+  };
+};
 
 function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const [currentPage, setCurrentPage] = useState(page);
@@ -48,16 +53,12 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   const router = useRouter();
-  console.log(router);
 
+  // Load page from url label
   const currentPageId = +router.asPath.replace("/#", "");
 
   // Custom use window hook
   const { direction, trigger, offset } = useWindowsScroll();
-
-  // Load page from url
-
-  const pageStyle = styles.page;
 
   const mapChild = (child: JSX.Element, key: number): JSX.Element => {
     if (React.isValidElement(child)) {
@@ -65,7 +66,7 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
       return React.cloneElement(child, {
         key,
         //@ts-ignore
-        className: classes(childClasses, pageStyle),
+        className: classes(childClasses, styles.page),
       });
     }
     return child;
@@ -109,15 +110,11 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
   };
 
   useEffect(() => {
-    // console.log("currentPageId", currentPageId);
-    // console.log("currentPage", currentPage);
-
     if (
       currentPageId &&
       currentPageId !== NaN &&
       currentPageId !== currentPage
     ) {
-      console.log("UPDATE");
       setCurrentPage(currentPageId);
     }
   }, [router]);
