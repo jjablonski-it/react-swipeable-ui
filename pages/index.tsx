@@ -14,10 +14,10 @@ function Home() {
   );
   return (
     <Scroll>
-      <Page text="One" className={styles.one} pageName="Page one" />
-      <Page text="Two" className={styles.two} />
-      <Page text="Three" className={styles.three} />
-      <Page text="Four" className={styles.four} />
+      <Page text="One" className={styles.one} pageName="About me" />
+      <Page text="Two" className={styles.two} pageName="Skills" />
+      <Page text="Three" className={styles.three} pageName="Projects" />
+      <Page text="Four" className={styles.four} pageName="Contact" />
     </Scroll>
   );
 }
