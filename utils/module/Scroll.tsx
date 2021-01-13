@@ -12,7 +12,7 @@ export interface PageProps {
   pageName?: string;
 }
 export interface NavigationProps {
-  pages: [Page];
+  pages: Page[];
   currentPage: number;
   forcePageChange: (page: number) => void;
 }
@@ -20,7 +20,7 @@ export interface NavigationProps {
 type NavigationFunction = (NavigationProps) => JSX.Element;
 type NavigationProp = NavigationFunction | boolean;
 interface Props {
-  children: [Page];
+  children: Page[];
   page?: number;
   pageIndicator?: boolean;
   navigation?: NavigationProp;
