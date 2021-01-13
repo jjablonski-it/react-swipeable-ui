@@ -17,11 +17,13 @@ export interface NavigationProps {
   forcePageChange: (page: number) => void;
 }
 
+export type PageIndicator = boolean | "always" | "on-hover" | "never";
+
 type NavigationFunction = (props: NavigationProps) => JSX.Element;
 type NavigationProp = NavigationFunction | boolean;
 interface Props {
   children: Page[];
-  pageIndicator?: boolean;
+  pageIndicator?: PageIndicator;
   navigation?: NavigationProp;
 }
 
@@ -178,6 +180,7 @@ function Scroll({ children, pageIndicator = true, navigation = true }: Props) {
           pages={children}
           currentPage={currentPage}
           setCurrentPage={forcePageChange}
+          type={pageIndicator}
         />
       )}
       <motion.div

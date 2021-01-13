@@ -1,11 +1,13 @@
 import React, { ReactElement } from "react";
 import { motion } from "framer-motion";
 import styles from "../../../styles/Pages.module.css";
+import { PageIndicator } from "../Scroll";
 
 interface Props {
   page: JSX.Element;
   current: boolean;
   index: number;
+  type: PageIndicator;
   setCurrentPage: (page: number) => void;
 }
 
@@ -14,8 +16,9 @@ function PageDot({
   current,
   index,
   setCurrentPage,
+  type,
 }: Props): ReactElement {
-  const size = 10;
+  const size = 11;
 
   return (
     <motion.div
@@ -24,12 +27,18 @@ function PageDot({
         width: `${size}px`,
         height: `${size}px`,
       }}
-      animate={{ scale: current ? 1.4 : 1 }}
-      whileHover={{ scale: 1.2 }}
+      animate={{ scale: current ? 1.3 : 1 }}
+      whileHover={{ scale: current ? 1.25 : 1.2 }}
       onClick={() => {
         setCurrentPage(index);
       }}
-    ></motion.div>
+    >
+      {type !== "never" && (
+        <div style={{ display: type == "always" ? "block" : "none" }}>
+          {page.props.pageName || `Page ${index + 1}`}
+        </div>
+      )}
+    </motion.div>
   );
 }
 

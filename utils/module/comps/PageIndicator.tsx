@@ -1,35 +1,23 @@
 import React, { ReactElement } from "react";
+import { PageIndicator as PageIndicatorType } from "../Scroll";
 import PageDot from "./PageDot";
-// import "../styles/PageIndicator.css";
+import styles from "../../../styles/Pages.module.css";
 
 interface Props {
   currentPage: number;
   pages: JSX.Element[];
   setCurrentPage: (page: number) => void;
+  type: PageIndicatorType;
 }
 
 function PageIndicator({
   pages,
   currentPage,
   setCurrentPage,
+  type,
 }: Props): ReactElement {
-  const pagesCount = pages.length;
-
   return (
-    <div
-      style={{
-        margin: 0,
-        padding: 0,
-        position: "fixed",
-        right: "15px",
-        top: "50%",
-        zIndex: 2,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        transform: "translateY(-50%)",
-      }}
-    >
+    <div className={styles.pageIndicator}>
       {pages.map((page, i) => (
         <PageDot
           key={i}
@@ -37,6 +25,7 @@ function PageIndicator({
           current={currentPage === i}
           index={i}
           setCurrentPage={setCurrentPage}
+          type={type}
         />
       ))}
     </div>
