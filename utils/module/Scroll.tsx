@@ -50,7 +50,7 @@ const baseVariants = (direction, offset): Variants => {
       transition: {
         type: "spring",
         damping: 90,
-        stiffness: 1000,
+        stiffness: 800,
       },
     },
     exit: {
