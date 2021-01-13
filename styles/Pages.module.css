@@ -76,14 +76,13 @@
   z-index: 1;
   padding-left: 30%;
   justify-content: space-around;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  margin: 15px 0;
 }
 
 .navigation div {
   cursor: pointer;
   color: white;
-  font-weight: bold;
-  margin-top: 15px;
 }
 
 .one {
