@@ -11,10 +11,12 @@ export interface PageProps {
   pageName?: string;
 }
 
+type CreateNavigation = ([Page]) => JSX.Element;
 interface Props {
-  children: Page[];
+  children: [Page];
   page?: number;
   pageIndicator?: boolean;
+  navigation?: boolean | CreateNavigation;
 }
 
 const initialVariants: Variants = {
@@ -51,7 +53,12 @@ const baseVariants = (direction, offset): Variants => {
   };
 };
 
-function Scroll({ children, page = 0, pageIndicator = true }: Props) {
+function Scroll({
+  children,
+  page = 0,
+  pageIndicator = true,
+  navigation = false,
+}: Props) {
   const [currentPage, setCurrentPage] = useState(page);
   const [animating, setAnimating] = useState(true);
   const [realDirection, setRealDirection] = useState<Direction>(null);
@@ -147,6 +154,7 @@ function Scroll({ children, page = 0, pageIndicator = true }: Props) {
 
   return (
     <>
+      {}
       {pageIndicator && (
         <PageIndicator
           pages={children}
