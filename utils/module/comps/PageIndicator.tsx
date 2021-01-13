@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
-import { PageIndicator as PageIndicatorType } from "../Scroll";
+import React, { ReactElement, useState } from "react";
+import { PageIndicator as _PageIndicator } from "../Scroll";
 import PageDot from "./PageDot";
 import styles from "../../../styles/Pages.module.css";
 
@@ -7,7 +7,7 @@ interface Props {
   currentPage: number;
   pages: JSX.Element[];
   setCurrentPage: (page: number) => void;
-  type: PageIndicatorType;
+  type: _PageIndicator;
 }
 
 function PageIndicator({
@@ -16,8 +16,15 @@ function PageIndicator({
   setCurrentPage,
   type,
 }: Props): ReactElement {
+  const [show, setShow] = useState(false);
+
   return (
-    <div className={styles.pageIndicator}>
+    <div
+      className={styles.pageIndicator}
+      onMouseEnter={() => setShow(true)}
+      onMouseLeave={() => setShow(false)}
+      onMouseOut={() => setShow(true)}
+    >
       {pages.map((page, i) => (
         <PageDot
           key={i}
@@ -25,7 +32,7 @@ function PageIndicator({
           current={currentPage === i}
           index={i}
           setCurrentPage={setCurrentPage}
-          type={type}
+          show={(type !== "never" && show) || type === "always"}
         />
       ))}
     </div>

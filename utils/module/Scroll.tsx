@@ -17,7 +17,7 @@ export interface NavigationProps {
   forcePageChange: (page: number) => void;
 }
 
-export type PageIndicator = boolean | "always" | "on-hover" | "never";
+export type PageIndicator = boolean | "always" | "hover" | "never";
 
 type NavigationFunction = (props: NavigationProps) => JSX.Element;
 type NavigationProp = NavigationFunction | boolean;

@@ -55,7 +55,7 @@
   border-radius: 50%;
   margin: 7px 0;
   cursor: pointer;
-  -webkit-tap-highlight-color: "transparent";
+  -webkit-tap-highlight-color: transparent;
 }
 
 .pageDot div {
@@ -67,10 +67,6 @@
   white-space: nowrap;
   text-align: end;
   transition: 0.5;
-}
-
-.pageDot:hover div {
-  display: block !important;
 }
 
 .navigation {

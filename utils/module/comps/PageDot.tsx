@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import styles from "../../../styles/Pages.module.css";
 import { PageIndicator } from "../Scroll";
 
@@ -7,7 +7,7 @@ interface Props {
   page: JSX.Element;
   current: boolean;
   index: number;
-  type: PageIndicator;
+  show: boolean;
   setCurrentPage: (page: number) => void;
 }
 
@@ -16,9 +16,9 @@ function PageDot({
   current,
   index,
   setCurrentPage,
-  type,
+  show,
 }: Props): ReactElement {
-  const size = 11;
+  const size = 10;
 
   return (
     <motion.div
@@ -33,11 +33,17 @@ function PageDot({
         setCurrentPage(index);
       }}
     >
-      {type !== "never" && (
-        <div style={{ display: type == "always" ? "block" : "none" }}>
-          {page.props.pageName || `Page ${index + 1}`}
-        </div>
-      )}
+      <AnimatePresence>
+        {show && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {page.props.pageName || `Page ${index + 1}`}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
