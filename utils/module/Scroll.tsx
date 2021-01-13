@@ -17,7 +17,7 @@ export interface NavigationProps {
   forcePageChange: (page: number) => void;
 }
 
-type NavigationFunction = (NavigationProps) => JSX.Element;
+type NavigationFunction = (props: NavigationProps) => JSX.Element;
 type NavigationProp = NavigationFunction | boolean;
 interface Props {
   children: Page[];
@@ -50,7 +50,7 @@ const baseVariants = (direction, offset): Variants => {
       transition: {
         type: "spring",
         damping: 90,
-        stiffness: 800,
+        stiffness: 1000,
       },
     },
     exit: {
@@ -101,7 +101,7 @@ function Scroll({
   const createNavigation = (
     navigation: NavigationProp,
     props: NavigationProps
-  ): any => {
+  ): ReactElement => {
     // TODO: correct type definitions
     if (!navigation) return null;
 

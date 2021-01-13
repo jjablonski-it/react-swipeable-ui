@@ -22,6 +22,7 @@ function Navigation({
     >
       {pages.map((page, i) => (
         <div
+          key={i}
           onClick={() => forcePageChange(i)}
           style={{
             cursor: "pointer",
