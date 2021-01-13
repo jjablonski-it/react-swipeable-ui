@@ -1,22 +1,29 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactElement, ReactNode, useEffect, useState } from "react";
 import useWindowsScroll, { Direction } from "./hooks/useWindowsScroll";
 import styles from "../../styles/Pages.module.css";
 import classes from "../helpers/classes";
 import { motion, Variants } from "framer-motion";
 import PageIndicator from "./comps/PageIndicator";
 import { useRouter } from "next/dist/client/router";
+import DefaultNavigation from "./comps/Navigation";
 
 export type Page = JSX.Element;
 export interface PageProps {
   pageName?: string;
 }
+export interface NavigationProps {
+  pages: [Page];
+  currentPage: number;
+  forcePageChange: (page: number) => void;
+}
 
-type CreateNavigation = ([Page]) => JSX.Element;
+type NavigationFunction = (NavigationProps) => JSX.Element;
+type NavigationProp = NavigationFunction | boolean;
 interface Props {
   children: [Page];
   page?: number;
   pageIndicator?: boolean;
-  navigation?: boolean | CreateNavigation;
+  navigation?: NavigationProp;
 }
 
 const initialVariants: Variants = {
@@ -57,7 +64,7 @@ function Scroll({
   children,
   page = 0,
   pageIndicator = true,
-  navigation = false,
+  navigation = true,
 }: Props) {
   const [currentPage, setCurrentPage] = useState(page);
   const [animating, setAnimating] = useState(true);
@@ -84,13 +91,23 @@ function Scroll({
     }
     return child;
   };
-
   const childrenWithProps = React.Children.map(children, mapChild);
 
   const PreviousPage = childrenWithProps[currentPage - 1];
   const CurrentPage = childrenWithProps[currentPage];
   const NextPage = childrenWithProps[currentPage + 1];
   const pagesCount = children.length;
+
+  const createNavigation = (
+    navigation: NavigationProp,
+    props: NavigationProps
+  ): any => {
+    // TODO: correct type definitions
+    if (!navigation) return null;
+
+    if (navigation === true) return <DefaultNavigation {...props} />;
+    return navigation(props);
+  };
 
   const updatePage = (page: number) => {
     if (!animating && page >= 0 && page < pagesCount) {
@@ -109,7 +126,7 @@ function Scroll({
     updatePage(newCurrentPage);
   };
 
-  const forcePageChange = (page) => {
+  const forcePageChange = (page: number) => {
     if (animating || page === currentPage) return;
     if (page < currentPage) setRealDirection("up");
     else if (page > currentPage) setRealDirection("down");
@@ -152,9 +169,15 @@ function Scroll({
 
   if (currentPageId !== currentPage && !animating) return <></>;
 
+  const Navigation = createNavigation(navigation, {
+    currentPage,
+    forcePageChange,
+    pages: children,
+  });
+
   return (
     <>
-      {}
+      {Navigation}
       {pageIndicator && (
         <PageIndicator
           pages={children}
