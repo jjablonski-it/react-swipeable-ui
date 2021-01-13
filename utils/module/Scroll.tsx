@@ -137,7 +137,8 @@ function Scroll({ children, pageIndicator = true, navigation = true }: Props) {
     if (
       currentPageId &&
       currentPageId !== NaN &&
-      currentPageId !== currentPage
+      currentPageId !== currentPage &&
+      children.some((_, i) => currentPageId === i) // redirect only if page exits
     ) {
       setCurrentPage(currentPageId);
     }

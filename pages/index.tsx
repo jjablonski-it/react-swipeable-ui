@@ -1,9 +1,6 @@
-import { useRouter } from "next/dist/client/router";
 import Page from "../components/Page";
 import Scroll from "../utils/module/Scroll";
 import styles from "../styles/Pages.module.css";
-import Navigation from "../utils/module/comps/Navigation";
-import TestNavigation from "../components/TestNavigation";
 
 function Home() {
   return (
