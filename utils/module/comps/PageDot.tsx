@@ -26,6 +26,7 @@ function PageDot({
         cursor: "pointer",
         width: `${size}px`,
         height: `${size}px`,
+        WebkitTapHighlightColor: "transparent",
       }}
       animate={{ scale: current ? 1.4 : 1 }}
       whileHover={{ scale: 1.2 }}
