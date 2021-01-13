@@ -21,7 +21,6 @@ type NavigationFunction = (props: NavigationProps) => JSX.Element;
 type NavigationProp = NavigationFunction | boolean;
 interface Props {
   children: Page[];
-  page?: number;
   pageIndicator?: boolean;
   navigation?: NavigationProp;
 }
@@ -60,13 +59,8 @@ const baseVariants = (direction, offset): Variants => {
   };
 };
 
-function Scroll({
-  children,
-  page = 0,
-  pageIndicator = true,
-  navigation = true,
-}: Props) {
-  const [currentPage, setCurrentPage] = useState(page);
+function Scroll({ children, pageIndicator = true, navigation = true }: Props) {
+  const [currentPage, setCurrentPage] = useState(0);
   const [animating, setAnimating] = useState(true);
   const [realDirection, setRealDirection] = useState<Direction>(null);
   const [destPage, setDestPage] = useState<number>(null);

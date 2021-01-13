@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import { motion } from "framer-motion";
+import styles from "../../../styles/Pages.module.css";
 
 interface Props {
   page: JSX.Element;
@@ -18,15 +19,10 @@ function PageDot({
 
   return (
     <motion.div
+      className={styles.pageDot}
       style={{
-        opacity: 0.4,
-        backgroundColor: "gray",
-        borderRadius: "50%",
-        margin: "5px 0",
-        cursor: "pointer",
         width: `${size}px`,
         height: `${size}px`,
-        WebkitTapHighlightColor: "transparent",
       }}
       animate={{ scale: current ? 1.4 : 1 }}
       whileHover={{ scale: 1.2 }}

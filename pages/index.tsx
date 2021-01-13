@@ -7,7 +7,7 @@ import TestNavigation from "../components/TestNavigation";
 
 function Home() {
   return (
-    <Scroll navigation={(props) => <TestNavigation {...props} />}>
+    <Scroll navigation={false}>
       <Page text="One" className={styles.one} pageName="About me" />
       <Page text="Two" className={styles.two} pageName="Skills" />
       <Page text="Three" className={styles.three} pageName="Projects" />
