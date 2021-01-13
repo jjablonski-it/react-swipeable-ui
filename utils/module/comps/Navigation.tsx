@@ -3,7 +3,11 @@ import { NavigationProps } from "../Scroll";
 
 interface Props extends NavigationProps {}
 
-function Navigation({ pages }: Props): ReactElement {
+function Navigation({
+  pages,
+  currentPage,
+  forcePageChange,
+}: Props): ReactElement {
   return (
     <div
       style={{
@@ -16,10 +20,20 @@ function Navigation({ pages }: Props): ReactElement {
         fontSize: "1.5rem",
       }}
     >
-      <div>Test</div>
-      <div>test2</div>
-      <div>test</div>
-      <div>sfsdf</div>
+      {pages.map((page, i) => (
+        <div
+          onClick={() => forcePageChange(i)}
+          style={{
+            cursor: "pointer",
+            textDecoration: currentPage === i ? "underline" : "none",
+            color: "white",
+            fontWeight: "bold",
+            marginTop: "15px",
+          }}
+        >
+          {page.props.pageName || `Page ${i + 1}`}
+        </div>
+      ))}
     </div>
   );
 }
