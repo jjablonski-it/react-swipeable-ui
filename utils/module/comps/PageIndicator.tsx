@@ -35,7 +35,8 @@ function PageIndicator({
           index={i}
           setCurrentPage={setCurrentPage}
           show={
-            (type !== "never" && (show || (type !== "hover-only" && force))) ||
+            (type !== "never" && show) ||
+            (type !== "hover-only" && force) ||
             type === "always"
           }
         />

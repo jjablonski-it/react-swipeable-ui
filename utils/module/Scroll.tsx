@@ -38,7 +38,13 @@ const initialVariants: Variants = {
   },
   animate: {
     opacity: 1,
-    transition: { duration: 0.75 },
+    y: ["0%", "-10%", "0%"],
+    transition: {
+      opactiy: { duration: 1 },
+      y: {
+        delay: 1,
+      },
+    },
   },
   exit: { opacity: 1 },
 };
@@ -186,7 +192,6 @@ function Scroll({ children, pageIndicator = true, navigation = false }: Props) {
           currentPage={currentPage}
           setCurrentPage={forcePageChange}
           type={pageIndicator}
-          force={animating}
         />
       )}
       <motion.div
