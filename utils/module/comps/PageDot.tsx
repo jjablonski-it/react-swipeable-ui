@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import styles from "../../../styles/Pages.module.css";
 import { PageIndicator } from "../Scroll";
 
@@ -11,6 +11,31 @@ interface Props {
   setCurrentPage: (page: number) => void;
 }
 
+const size = 13;
+
+const wrapper: Variants = {
+  default: (current) => ({
+    scale: current ? 1.4 : 1,
+  }),
+  hover: (current) => ({
+    scale: current ? 1.4 : 1.3,
+    transition: { type: "spring", delayChildren: 1 },
+  }),
+};
+
+const dot: Variants = {
+  default: {
+    opacity: 0,
+  },
+  hover: {
+    opacity: 1,
+  },
+  leave: {
+    opacity: 0,
+    transition: { delay: 0.3 },
+  },
+};
+
 function PageDot({
   page,
   current,
@@ -18,8 +43,6 @@ function PageDot({
   setCurrentPage,
   show,
 }: Props): ReactElement {
-  const size = 10;
-
   return (
     <motion.div
       className={styles.pageDot}
@@ -27,8 +50,10 @@ function PageDot({
         width: `${size}px`,
         height: `${size}px`,
       }}
-      animate={{ scale: current ? 1.4 : 1 }}
-      whileHover={{ scale: current ? 1.4 : 1.3 }}
+      custom={current}
+      variants={wrapper}
+      animate="default"
+      whileHover="hover"
       onClick={() => {
         setCurrentPage(index);
       }}
@@ -36,9 +61,10 @@ function PageDot({
       <AnimatePresence>
         {show && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={dot}
+            initial="default"
+            animate="hover"
+            exit="leave"
           >
             {page.props.pageName || `Page ${index + 1}`}
           </motion.div>

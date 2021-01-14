@@ -8,6 +8,7 @@ interface Props {
   pages: JSX.Element[];
   setCurrentPage: (page: number) => void;
   type: _PageIndicator;
+  force: boolean;
 }
 
 function PageIndicator({
@@ -15,6 +16,7 @@ function PageIndicator({
   currentPage,
   setCurrentPage,
   type,
+  force,
 }: Props): ReactElement {
   const [show, setShow] = useState(false);
 
@@ -32,7 +34,7 @@ function PageIndicator({
           current={currentPage === i}
           index={i}
           setCurrentPage={setCurrentPage}
-          show={(type !== "never" && show) || type === "always"}
+          show={(type !== "never" && (show || force)) || type === "always"}
         />
       ))}
     </div>
