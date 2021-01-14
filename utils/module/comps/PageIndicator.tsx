@@ -34,7 +34,10 @@ function PageIndicator({
           current={currentPage === i}
           index={i}
           setCurrentPage={setCurrentPage}
-          show={(type !== "never" && (show || force)) || type === "always"}
+          show={
+            (type !== "never" && (show || (type !== "hover-only" && force))) ||
+            type === "always"
+          }
         />
       ))}
     </div>
