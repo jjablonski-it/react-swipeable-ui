@@ -192,6 +192,7 @@ function Scroll({ children, pageIndicator = true, navigation = false }: Props) {
           currentPage={currentPage}
           setCurrentPage={forcePageChange}
           type={pageIndicator}
+          force={animating}
         />
       )}
       <motion.div
