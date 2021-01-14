@@ -61,7 +61,7 @@ const baseVariants = (direction, offset): Variants => {
   };
 };
 
-function Scroll({ children, pageIndicator = true, navigation = true }: Props) {
+function Scroll({ children, pageIndicator = true, navigation = false }: Props) {
   const [currentPage, setCurrentPage] = useState(0);
   const [animating, setAnimating] = useState(true);
   const [realDirection, setRealDirection] = useState<Direction>(null);
