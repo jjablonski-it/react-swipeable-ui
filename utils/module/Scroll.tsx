@@ -36,16 +36,17 @@ const initialVariants: Variants = {
   initial: {
     opacity: 0,
   },
-  animate: {
+  animate: (currentPage) => ({
     opacity: 1,
-    y: ["0%", "-10%", "0%"],
+    y: currentPage === 0 ? ["0%", "-5%", "-5%", "0%"] : 0,
     transition: {
-      opactiy: { duration: 1 },
+      opactiy: { duration: 0.8 },
       y: {
-        delay: 1,
+        delay: 0.4,
+        duration: 1,
       },
     },
-  },
+  }),
   exit: { opacity: 1 },
 };
 
@@ -196,6 +197,7 @@ function Scroll({ children, pageIndicator = true, navigation = false }: Props) {
         />
       )}
       <motion.div
+        custom={currentPage}
         variants={
           isFirstRender
             ? initialVariants
