@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import { PageIndicator as _PageIndicator } from "../Scroll";
 import PageDot from "./PageDot";
-import styles from "../../../styles/Pages.module.css";
+import styles from "../../../styles/Scroll.module.css";
 
 interface Props {
   currentPage: number;

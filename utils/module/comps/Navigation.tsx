@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { NavigationProps } from "../Scroll";
-import styles from "../../../styles/Pages.module.css";
+import styles from "../../../styles/Scroll.module.css";
 
 interface Props extends NavigationProps {}
 

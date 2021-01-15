@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode, useEffect, useState } from "react";
 import useWindowsScroll, { Direction } from "./hooks/useWindowsScroll";
-import styles from "../../styles/Pages.module.css";
+import styles from "../../styles/Scroll.module.css";
 import classes from "../helpers/classes";
 import { motion, Variants } from "framer-motion";
 import PageIndicator from "./comps/PageIndicator";
@@ -38,12 +38,12 @@ const initialVariants: Variants = {
   },
   animate: (currentPage) => ({
     opacity: 1,
-    y: currentPage === 0 ? ["0%", "-5%", "-5%", "0%"] : 0,
+    y: currentPage === 0 ? ["0%", "-3%", "-3%", "-3%", "0%"] : 0,
     transition: {
       opactiy: { duration: 0.8 },
       y: {
-        delay: 0.4,
-        duration: 1,
+        delay: 0.5,
+        duration: 0.6,
       },
     },
   }),
@@ -88,17 +88,12 @@ function Scroll({ children, pageIndicator = true, navigation = false }: Props) {
   // Custom use window hook
   const { direction, trigger, offset } = useWindowsScroll();
 
-  const mapChild = (child: Page, key: number): Page => {
-    if (React.isValidElement(child)) {
-      const childClasses = (child.props as any).className;
-      return React.cloneElement(child, {
-        key,
-        //@ts-ignore
-        className: classes(childClasses, styles.page),
-      });
-    }
-    return child;
-  };
+  const mapChild = (child: Page, key: number) => (
+    <div className={styles.page} key={key}>
+      {child}
+    </div>
+  );
+
   const childrenWithProps = React.Children.map(children, mapChild);
 
   const PreviousPage = childrenWithProps[currentPage - 1];
