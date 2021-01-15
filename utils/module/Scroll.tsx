@@ -89,7 +89,10 @@ function Scroll({ children, pageIndicator = true, navigation = false }: Props) {
   const { direction, trigger, offset } = useWindowsScroll();
 
   const mapChild = (child: Page, key: number) => (
-    <div className={styles.page} key={key}>
+    <div
+      className={classes(styles.page, key % 2 === 0 ? styles.odd : "")}
+      key={key}
+    >
       {child}
     </div>
   );
