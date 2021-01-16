@@ -3,7 +3,7 @@ import ExamplePage from "../components/ExamplePage";
 
 function Home() {
   return (
-    <Scroll pageIndicator="hover" navigation={false}>
+    <Scroll>
       <ExamplePage text="One" />
       <ExamplePage text="Two" pageName="Custom name" />
       <h1>Html element page example</h1>

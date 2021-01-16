@@ -30,15 +30,19 @@ interface Props {
   children: Page[];
   pageIndicator?: PageIndicator;
   navigation?: NavigationProp;
+  scrollableIndicator?: boolean;
 }
 
 const initialVariants: Variants = {
   initial: {
     opacity: 0,
   },
-  animate: (currentPage) => ({
+  animate: ({ currentPage, scrollableIndicator }) => ({
     opacity: 1,
-    y: currentPage === 0 ? ["0%", "-3%", "-3%", "-3%", "0%"] : 0,
+    y:
+      scrollableIndicator && currentPage === 0
+        ? ["0%", "-3%", "-3%", "-3%", "0%"]
+        : 0,
     transition: {
       opactiy: { duration: 0.8 },
       y: {
@@ -50,7 +54,7 @@ const initialVariants: Variants = {
   exit: { opacity: 1 },
 };
 
-const baseVariants = (direction, offset): Variants => {
+const baseVariants = (direction: Direction, offset: number): Variants => {
   const offsetPx = -offset / 3;
   return {
     initial: {
@@ -73,7 +77,12 @@ const baseVariants = (direction, offset): Variants => {
   };
 };
 
-function Scroll({ children, pageIndicator = true, navigation = false }: Props) {
+function Scroll({
+  children,
+  pageIndicator = true,
+  navigation = false,
+  scrollableIndicator = true,
+}: Props) {
   const [currentPage, setCurrentPage] = useState(0);
   const [animating, setAnimating] = useState(true);
   const [realDirection, setRealDirection] = useState<Direction>(null);
@@ -195,7 +204,7 @@ function Scroll({ children, pageIndicator = true, navigation = false }: Props) {
         />
       )}
       <motion.div
-        custom={currentPage}
+        custom={{ currentPage, scrollableIndicator }}
         variants={
           isFirstRender
             ? initialVariants
