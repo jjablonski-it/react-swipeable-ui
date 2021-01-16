@@ -1,12 +1,12 @@
-import About from "../components/About";
 import Scroll from "../components/Scroll";
-import Skills from "../components/Skills";
+import ExamplePage from "../components/ExamplePage";
 
 function Home() {
   return (
-    <Scroll pageIndicator="hover">
-      <About pageName="About me" />
-      <Skills pageName="Skills" />
+    <Scroll pageIndicator="hover" navigation={false}>
+      <ExamplePage text="One" />
+      <ExamplePage text="Two" pageName="Custom name" />
+      <h1>Html element example</h1>
     </Scroll>
   );
 }
