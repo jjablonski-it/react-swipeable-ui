@@ -1,11 +1,11 @@
-import React, { ReactElement, ReactNode, useEffect, useState } from "react";
-import useWindowsScroll, { Direction } from "./hooks/useWindowsScroll";
+import React, { ReactElement, useEffect, useState } from "react";
+import useWindowsScroll, { Direction } from "../../hooks/useWindowsScroll";
 import styles from "../../styles/Scroll.module.css";
-import classes from "../helpers/classes";
 import { motion, Variants } from "framer-motion";
 import PageIndicator from "./comps/PageIndicator";
 import { useRouter } from "next/dist/client/router";
 import DefaultNavigation from "./comps/Navigation";
+import classes from "../../utils/helpers/classes";
 
 export type Page = JSX.Element;
 export interface PageProps {

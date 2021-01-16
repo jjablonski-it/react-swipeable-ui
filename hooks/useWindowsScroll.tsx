@@ -3,7 +3,7 @@ import {
   pageYfromTouch,
   deltaDiff,
   pageYfromClick,
-} from "../../helpers/windowEvents";
+} from "../utils/helpers/windowEvents";
 
 export type Direction = "up" | "down" | null;
 const threshold = 100;

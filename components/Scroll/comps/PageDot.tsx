@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import styles from "../../../styles/Scroll.module.css";
-import { PageIndicator } from "../Scroll";
+import { PageIndicator } from "..";
 
 interface Props {
   page: JSX.Element;

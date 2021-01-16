@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { PageProps } from "../utils/module/Scroll";
+import { PageProps } from "./Scroll";
 
 interface Props extends PageProps {}
 

@@ -1,5 +1,5 @@
-import Scroll from "../utils/module/Scroll";
 import About from "../components/About";
+import Scroll from "../components/Scroll";
 import Skills from "../components/Skills";
 
 function Home() {

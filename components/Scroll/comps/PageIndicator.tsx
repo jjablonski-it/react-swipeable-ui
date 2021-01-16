@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import { PageIndicator as _PageIndicator } from "../Scroll";
+import { PageIndicator as _PageIndicator } from "..";
 import PageDot from "./PageDot";
 import styles from "../../../styles/Scroll.module.css";
 
