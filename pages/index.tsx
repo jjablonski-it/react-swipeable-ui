@@ -6,7 +6,7 @@ function Home() {
     <Scroll pageIndicator="hover" navigation={false}>
       <ExamplePage text="One" />
       <ExamplePage text="Two" pageName="Custom name" />
-      <h1>Html element example</h1>
+      <h1>Html element page example</h1>
     </Scroll>
   );
 }

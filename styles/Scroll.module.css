@@ -10,7 +10,7 @@
   background-color: var(--background-color1);
 }
 
-.odd {
+.page.odd {
   background-color: var(--background-color2);
 }
 
