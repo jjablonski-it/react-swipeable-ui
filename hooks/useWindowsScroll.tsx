@@ -30,16 +30,16 @@ function useWindowsScroll() {
     setTrigger(!trigger);
   };
 
-  const handleScroll = (e) => {
+  const handleScroll = (e: WheelEvent) => {
     const delta = e.deltaY;
     updateDirection(delta);
   };
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: TouchEvent) => {
     setStartPos(pageYfromTouch(e));
   };
 
-  const handleTouchEnd = (e) => {
+  const handleTouchEnd = (e: TouchEvent) => {
     const endPos = pageYfromTouch(e);
     const delta = deltaDiff(startPos, endPos);
     updateDirection(delta);
@@ -47,23 +47,23 @@ function useWindowsScroll() {
     setOffset(0);
   };
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = (e: TouchEvent) => {
     const currentPos = pageYfromTouch(e);
     setOffset(deltaDiff(startPos, currentPos));
   };
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: MouseEvent) => {
     setStartPos(pageYfromClick(e));
     setMouseDown(true);
   };
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: MouseEvent) => {
     if (!mouseDown) return;
     const currentPos = pageYfromClick(e);
     setOffset(deltaDiff(startPos, currentPos));
   };
 
-  const handleMouseUp = (e) => {
+  const handleMouseUp = (e: MouseEvent) => {
     if (!mouseDown) return;
     const endPos = pageYfromClick(e);
     const delta = deltaDiff(startPos, endPos);
