@@ -125,7 +125,7 @@ function Scroll({
   };
 
   const updatePage = (page: number | null) => {
-    if (page && !animating && page >= 0 && page < pagesCount) {
+    if (page !== null && !animating && page >= 0 && page < pagesCount) {
       setCurrentPage(page);
       setAnimating(true);
     }
@@ -183,13 +183,13 @@ function Scroll({
     if (destPage !== null) handleForcePageChange();
   }, [destPage]);
 
-  if (currentPageId !== currentPage && !animating) return <></>;
-
   const Navigation = createNavigation(navigation, {
     currentPage,
     forcePageChange,
     pages: children,
   });
+
+  if (currentPageId !== currentPage && !animating) return <></>;
 
   return (
     <>
