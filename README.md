@@ -5,7 +5,7 @@ Also working on mobile devices.
 
 ## Live demo
 
-You can find demo [here](https://cv.jjablonski-it.vercel.app/).
+You can find demo [here](https://swipeable.jjablonski-it.vercel.app/).
 
 ## Code samples
 
