@@ -82,7 +82,7 @@ function useWindowsScroll() {
 
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("mouseout", handleMouseUp);
+    // window.addEventListener("mouseout", handleMouseUp);
     window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
@@ -94,7 +94,7 @@ function useWindowsScroll() {
 
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("mouseout", handleMouseUp);
+      // window.removeEventListener("mouseout", handleMouseUp);
       window.removeEventListener("mousemove", handleMouseMove);
     };
   });
