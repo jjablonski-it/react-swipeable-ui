@@ -10,7 +10,7 @@ const threshold = 100;
 
 function useWindowsScroll() {
   const [direction, setDirection] = useState<Direction>(null);
-  const [startPos, setStartPos] = useState<number | null>(null);
+  const [startPos, setStartPos] = useState<number>(0);
   const [mouseDown, setMouseDown] = useState<boolean>(false);
   const [offset, setOffset] = useState<number>(0);
   const [trigger, setTrigger] = useState<boolean>(false);
@@ -43,7 +43,7 @@ function useWindowsScroll() {
     const endPos = pageYfromTouch(e);
     const delta = deltaDiff(startPos, endPos);
     updateDirection(delta);
-    setStartPos(null);
+    setStartPos(0);
     setOffset(0);
   };
 
@@ -69,12 +69,12 @@ function useWindowsScroll() {
     const delta = deltaDiff(startPos, endPos);
     updateDirection(delta);
     setMouseDown(false);
-    setStartPos(null);
+    setStartPos(0);
     setOffset(0);
   };
 
   useLayoutEffect(() => {
-    window.addEventListener("mousewheel", handleScroll);
+    window.addEventListener("mousewheel", handleScroll as any);
 
     window.addEventListener("touchstart", handleTouchStart);
     window.addEventListener("touchend", handleTouchEnd);
@@ -86,7 +86,7 @@ function useWindowsScroll() {
     window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      window.removeEventListener("mousewheel", handleScroll);
+      window.removeEventListener("mousewheel", handleScroll as any);
 
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);

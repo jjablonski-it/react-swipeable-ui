@@ -1,4 +1,4 @@
-const classes = (...args) => {
+const classes = (...args: string[]) => {
   return args.filter((arg) => arg).join(" ");
 };
 

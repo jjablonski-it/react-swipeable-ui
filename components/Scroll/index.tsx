@@ -86,7 +86,7 @@ function Scroll({
   const [currentPage, setCurrentPage] = useState(0);
   const [animating, setAnimating] = useState(true);
   const [realDirection, setRealDirection] = useState<Direction>(null);
-  const [destPage, setDestPage] = useState<number>(null);
+  const [destPage, setDestPage] = useState<number | null>(null);
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   const router = useRouter();
@@ -118,24 +118,24 @@ function Scroll({
     props: NavigationProps
   ): ReactElement => {
     // TODO: correct type definitions
-    if (!navigation) return null;
+    if (!navigation) return <></>;
 
     if (navigation === true) return <DefaultNavigation {...props} />;
     return navigation(props);
   };
 
-  const updatePage = (page: number) => {
-    if (!animating && page >= 0 && page < pagesCount) {
+  const updatePage = (page: number | null) => {
+    if (page && !animating && page >= 0 && page < pagesCount) {
       setCurrentPage(page);
       setAnimating(true);
     }
   };
 
-  const handlePageChange = (direction) => {
+  const handlePageChange = (direction: Direction) => {
     let newCurrentPage: number;
     if (direction === "up") {
       newCurrentPage = currentPage - 1;
-    } else if (direction === "down") {
+    } else {
       newCurrentPage = currentPage + 1;
     }
     updatePage(newCurrentPage);
