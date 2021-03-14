@@ -9,8 +9,7 @@ You can find demo [here](https://swipeable.jjablonski-it.vercel.app/).
 
 ## Code samples
 
-### HOC
-
+### Usage
 ```jsx
 import Scroll from "../components/Scroll";
 import ExamplePage from "../components/ExamplePage";
